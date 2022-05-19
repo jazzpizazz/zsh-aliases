@@ -59,8 +59,12 @@ gen_ps_rev () {
 
 
 # TTY upgrades
-alias py_tty_upgrade="echo 'python -c \"import pty;pty.spawn('/bin/bash')\"'| xclip -sel clip"
-alias py3_tty_upgrade="echo 'python3 -c \"import pty;pty.spawn('/bin/bash')\"'| xclip -sel clip"
+py_tty_upgrade () {
+  echo "python -c 'import pty;pty.spawn(\"/bin/bash\")'"| xclip -sel clip
+}
+py3_tty_upgrade () {
+  echo "python3 -c 'import pty;pty.spawn(\"/bin/bash\")'"| xclip -sel clip
+}
 alias script_tty_upgrade="echo '/usr/bin/script -qc /bin/bash /dev/null'| xclip -sel clip"
 alias tty_fix="stty raw -echo; fg; reset"
 alias tty_conf="stty -a | sed 's/;//g' | head -n 1 | sed 's/.*baud /stty /g;s/line.*//g' | xclip -sel clip"
