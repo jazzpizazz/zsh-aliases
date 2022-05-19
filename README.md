@@ -87,7 +87,7 @@ Example:
 ```
 Clipboard contents after:
 ```
-python -c "import pty;pty.spawn(/bin/bash)"
+python -c 'import pty;pty.spawn("/bin/bash")'
 ```
 > #### Notes
 > - Requires `xclip` to be installed
@@ -101,7 +101,7 @@ Example:
 ```
 Clipboard contents after:
 ```
-python3 -c "import pty;pty.spawn(/bin/bash)"
+python3 -c 'import pty;pty.spawn("/bin/bash")'
 ```
 > #### Notes
 > - Requires `xclip` to be installed
