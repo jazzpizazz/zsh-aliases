@@ -180,5 +180,5 @@ Starting Nmap 7.92 ( https://nmap.org ) at 2022-05-19 16:11 EDT
 ...
 ```
 > #### Notes
-> - This only scans the default TCP ports. Add `-p-` as an argument to scan all ports.
+> - This only scans the default UDP ports. Add `-p-` as an argument to scan all ports.
 > - Uses `sudo` to get the privileges required for a UDP scan
