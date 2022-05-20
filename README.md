@@ -153,6 +153,8 @@ jazz             (?)
 Use the "--show --format=Raw-MD5" options to display all of the cracked passwords reliably
 Session completed.
 ```
+> #### Notes
+> - Kali seems to have fixed auto completion for John in 2022.2! This alias still saves you some effort though ;)
 ## Portscanning
 ### > nmap_tcp $ip (extra arguments)
 Starts a TCP nmap scan with my default settings and outputs the scan results to an nmap directory which is automatically created if it does not yet exist. 
