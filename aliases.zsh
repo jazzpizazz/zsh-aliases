@@ -12,7 +12,7 @@ mkdir_cd() {
 }
 
 alias www="list_ips && ls_pwd && sudo python3 -m http.server 80"
-alias tun0="ifconfig tun0 | grep 'inet ' | cut -d' ' -f10 | xclip -sel clip"
+alias tun0="ifconfig tun0 | grep 'inet ' | cut -d' ' -f10 | tr -d '\n' | xclip -sel clip"
 
 # Hashcracking
 rock_john() {
