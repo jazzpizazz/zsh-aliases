@@ -153,6 +153,8 @@ jazz             (?)
 Use the "--show --format=Raw-MD5" options to display all of the cracked passwords reliably
 Session completed.
 ```
+> #### Notes
+> - Kali seems to have fixed auto completion for John in 2022.2! This alias still saves you some effort though ;)
 ## Portscanning
 ### > nmap_tcp $ip (extra arguments)
 Starts a TCP nmap scan with my default settings and outputs the scan results to an nmap directory which is automatically created if it does not yet exist. 
@@ -165,7 +167,7 @@ Starting Nmap 7.92 ( https://nmap.org ) at 2022-05-19 16:04 EDT
 ...
 ```
 > #### Notes
-> - This only scans the default TCP ports. Add `-p` as an argument to scan all ports.
+> - This only scans the default TCP ports. Add `-p-` as an argument to scan all ports.
 > - Uses `sudo` to get the privileges required for a SYN scan
 ### > nmap_udp $ip (extra arguments)
 Starts an UDP nmap scan with my default settings and outputs the scan results to an nmap directory which is automatically created if it does not yet exist. 
@@ -178,5 +180,5 @@ Starting Nmap 7.92 ( https://nmap.org ) at 2022-05-19 16:11 EDT
 ...
 ```
 > #### Notes
-> - This only scans the default TCP ports. Add `-p` as an argument to scan all ports.
+> - This only scans the default UDP ports. Add `-p-` as an argument to scan all ports.
 > - Uses `sudo` to get the privileges required for a UDP scan
