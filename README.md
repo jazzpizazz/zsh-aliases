@@ -182,3 +182,70 @@ Starting Nmap 7.92 ( https://nmap.org ) at 2022-05-19 16:11 EDT
 > #### Notes
 > - This only scans the default UDP ports. Add `-p-` as an argument to scan all ports.
 > - Uses `sudo` to get the privileges required for a UDP scan
+
+## Web Fuzzing
+### > vhost $domain (extra arguments)
+Performs virtual host discovery using ffuf.
+Example:
+```
+┌──(22sh㉿kali)-[~]
+└─$ vhost box.htb
+```
+
+### > fuzz_dir $url (extra arguments)
+Performs directory and files fuzzing using ffuf.
+Exemple:
+```
+┌──(22sh㉿kali)-[~]
+└─$ fuzz_dir http://box.htb
+```
+
+## Chisel Tunneling
+### > chisel_socks $ip $port
+Sets up a SOCKS proxy using Chisel and copy the command to the clipboard.
+Example:
+
+```
+┌──(22sh㉿kali)-[~/jazz]
+└─$ chisel_socks 10.10.14.10 8888
+
+[+] copied chisel client -v 10.10.14.10:8888 R:socks in clipboard
+2024/08/05 23:31:03 server: Reverse tunnelling enabled
+2024/08/05 23:31:03 server: Fingerprint vasHkxo+4Ec2ahPgyQ8BNqQVXOCda9cmPmP7WXRdh44=
+2024/08/05 23:31:03 server: Listening on http://0.0.0.0:8888
+```
+### > chisel_forward $local_ip $local_port $remote_ip $remote_port
+Sets up port forwarding using Chisel.
+Example:
+
+```
+┌──(22sh㉿kali)-[~/jazz]
+└─$ chisel_forward 10.10.14.10 8080 127.0.0.1 8080
+[+] Copied to clipboard: ./chisel client 10.10.14.10:8888 R:8080:127.0.0.1:8080
+[+] Run this on the target machine
+2024/08/05 23:32:30 server: Reverse tunnelling enabled
+2024/08/05 23:32:30 server: Fingerprint x2iuHfzYVOWXL/7Gw0a6AjXhMIg8WP7AqZwlDuRasQw=
+2024/08/05 23:32:30 server: Listening on http://0.0.0.0:8888
+```
+## Host Management
+### > addhost $ip $hostname
+Adds or updates an entry in the /etc/hosts file.
+Example:
+```
+┌──(22sh㉿kali)-[~/jazz]
+└─$ addhost 10.10.11.234 big.box.htb 
+[+] Appended big.box.htb to existing entry for 10.10.11.234 in /etc/hosts
+10.10.11.234 boss.htb big.boss.htb big.box.htb
+
+
+┌──(22sh㉿kali)-[~/jazz]
+└─$ addhost 10.10.11.235 newbox.htb 
+[+] Added new entry: 10.10.11.235 newbox.htb to /etc/hosts
+10.10.11.235 newbox.htb
+```
+
+
+## Additional Aliases
+- `linpeas`: Downloads the latest version of LinPEAS.
+- `upload`: Uploads a file using bashupload.com.
+- `phpcmd`: Creates a simple PHP web shell.

