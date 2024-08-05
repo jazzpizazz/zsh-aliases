@@ -14,6 +14,21 @@ mkdir_cd() {
 alias www="list_ips && ls_pwd && sudo python3 -m http.server 80"
 alias tun0="ifconfig tun0 | grep 'inet ' | cut -d' ' -f10 | tr -d '\n' | xclip -sel clip"
 
+# seclist_path
+get_seclists_dir() {
+    if [ -d "/opt/seclists" ]; then
+        echo "/opt/seclists"
+    elif [ -d "/usr/share/seclists" ]; then
+        echo "/usr/share/seclists"
+    elif [ -n "$SECLISTS_PATH" ]; then
+        echo "$SECLISTS_PATH"
+    else
+        echo "Error: Could not find SecLists directory. Please set SECLISTS_PATH environment variable or install SecLists in a standard location." >&2
+        return 1
+    fi
+}
+
+
 # Hashcracking
 rock_john() {
   if [ $# -eq 0 ]
@@ -66,18 +81,54 @@ uptty () {
 
 # Ffuf vhost
 vhost() {
-        ffuf -H "Host: FUZZ.$1" -u http://$1 -w /opt/seclists/Discovery/DNS/bitquark-subdomains-top100000.txt ${@: 2};
+    if [ "$#" -lt 1 ]; then
+        echo "[i] Usage: vhost <domain> (extra arguments)"
+        return 1
+    fi
+
+    local seclists_dir=$(get_seclists_dir)
+    if [ $? -ne 0 ]; then
+        return 1
+    fi
+
+    local wordlist="$seclists_dir/Discovery/DNS/bitquark-subdomains-top100000.txt"
+    ffuf -H "Host: FUZZ.$1" -u "http://$1" -w "$wordlist" "${@:2}"
 }
 
-# Ffuf files and dir
 fuzz_dir() {
-      if [ "$#" -ne 2 ];
-      then  "[i] Usage: fuzz_dir <url> <opt_args>"
-      else  
-        ffuf -u "$1/FUZZ" -w /opt/seclists/Discovery/Web-Content/raft-large-directories.txt -e .php,.asp,.txt,.php.old,.html,.php.bak,.bak,.aspx ${@: 2};
-      fi
-}
+    if [ "$#" -lt 1 ]; then
+        echo "[i] Usage: fuzz_dir <url> [-w <wordlist>] [ffuf options]"
+        return 1
+    fi
 
+    local url="$1"
+    shift
+
+    local seclists_dir=$(get_seclists_dir)
+    if [ $? -ne 0 ]; then
+        return 1
+    fi
+
+    local default_wordlist="$seclists_dir/Discovery/Web-Content/raft-large-directories.txt"
+    local wordlist="$default_wordlist"
+    local ffuf_args=()
+
+    # Parse arguments
+    while [[ $# -gt 0 ]]; do
+        case $1 in
+            -w)
+                wordlist="$2"
+                shift 2
+                ;;
+            *)
+                ffuf_args+=("$1")
+                shift
+                ;;
+        esac
+    done
+
+    ffuf -u "$url/FUZZ" -w "$wordlist" -e .php,.asp,.txt,.php.old,.html,.php.bak,.bak,.aspx "${ffuf_args[@]}"
+}
 # Chisel
 chisel_socks() {
         if [ "$#" -ne 2 ];
