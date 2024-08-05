@@ -265,3 +265,4 @@ Example:
 - `linpeas`: Downloads the latest version of LinPEAS.
 - `upload`: Uploads a file using bashupload.com.
 - `phpcmd`: Creates a simple PHP web shell.
+- `burl`: curl using burpsuite proxy.
