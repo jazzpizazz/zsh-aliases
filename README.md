@@ -91,6 +91,7 @@ python3 -c 'import pty;pty.spawn("/bin/bash")';python -c 'import pty;pty.spawn("
 ```
 > #### Notes
 > - Requires `xclip` to be installed
+> - `py_tty_upgrade` and `py3_tty_upgrade` are still included for now but will call this alias instead
 
 ### > script_tty_upgrade
 When Python is not installed on the remote machine you can use this command to copy the `script` method to upgrade to a tty shell to your clipboard. 
@@ -189,7 +190,7 @@ To set up SecLists for use with these scripts:
 
    ```bash
    export SECLISTS_PATH="/path/to/seclists"
-   # You can add this line to your .bashrc or .zshrc file to make it permanent.
+   # You can add this line to your .zshrc file to make it permanent.
     ```
 
 ## Web Fuzzing
@@ -200,6 +201,9 @@ Example:
 ┌──(22sh㉿kali)-[~]
 └─$ vhost box.htb
 ```
+> #### Notes
+> - When passing just the domain http will be used, you can however also pass in the full url https://box.htb for https
+> - Requires `ffuf` to be installed
 ### > fuzz_dir $url (extra arguments)
 Performs directory and files fuzzing using ffuf.
 Exemple:
@@ -216,7 +220,8 @@ Exemple:
 ┌──(22sh㉿kali)-[~]
 └─$ fuzz_dir http://box.htb -w /path/to/custom/wordlist.txt -fs 245
 ```
-
+> #### Notes
+> - Requires `ffuf` to be installed
 ## Chisel Tunneling
 ### > chisel_socks $ip $port
 Sets up a SOCKS proxy using Chisel and copy the command to the clipboard.

