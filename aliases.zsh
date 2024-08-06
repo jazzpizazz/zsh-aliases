@@ -16,16 +16,19 @@ alias tun0="ifconfig tun0 | grep 'inet ' | cut -d' ' -f10 | tr -d '\n' | xclip -
 
 # seclist_path
 get_seclists_dir() {
+  local dir
     if [ -d "/opt/seclists" ]; then
-        echo "/opt/seclists"
+        dir="/opt/seclists"
     elif [ -d "/usr/share/seclists" ]; then
-        echo "/usr/share/seclists"
+        dir="/usr/share/seclists"
     elif [ -n "$SECLISTS_PATH" ]; then
-        echo "$SECLISTS_PATH"
+        dir="$SECLISTS_PATH"
     else
         echo "Error: Could not find SecLists directory. Please set SECLISTS_PATH environment variable or install SecLists in a standard location." >&2
         return 1
     fi
+    echo $dir
+    return 0
 }
 
 
@@ -86,13 +89,22 @@ vhost() {
         return 1
     fi
 
-    local seclists_dir=$(get_seclists_dir)
-    if [ $? -ne 0 ]; then
+    local seclists_dir
+    seclists_dir=$(get_seclists_dir)
+    local exit_status=$?
+    if [[ $exit_status -ne 0 ]]; then
         return 1
     fi
 
+    local url=$1
+    # Default to http if no protocol specified, but allow optional specifying of the protocol
+    # So we can also use it against HTTPS
+    if [[ ! "$url" =~ ^https?:// ]]; then
+        url="http://$url"
+    fi
+
     local wordlist="$seclists_dir/Discovery/DNS/bitquark-subdomains-top100000.txt"
-    ffuf -H "Host: FUZZ.$1" -u "http://$1" -w "$wordlist" "${@:2}"
+    ffuf -H "Host: FUZZ.$1" -u $url -w "$wordlist" "${@:2}"
 }
 
 fuzz_dir() {
@@ -104,8 +116,10 @@ fuzz_dir() {
     local url="$1"
     shift
 
-    local seclists_dir=$(get_seclists_dir)
-    if [ $? -ne 0 ]; then
+    local seclists_dir
+    seclists_dir=$(get_seclists_dir)
+    local exit_status=$?
+    if [[ $exit_status -ne 0 ]]; then
         return 1
     fi
 
