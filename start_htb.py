@@ -107,7 +107,6 @@ def start_tmux_session_with_windows(session_name, command1, command2, command3, 
 
 def run_zsh_command_in_tmux_pane(session_name, pane, command):
     try:
-        command = f'source ~/.zshrc && {command}'
         subprocess.run(['tmux', 'send-keys', '-t', f'{session_name}:{pane}', command, 'C-m'], check=True)
     except subprocess.CalledProcessError as e:
         print(f"[-] Failed to run command '{command}' in pane {pane}: {e}")
@@ -161,6 +160,8 @@ os.chdir(f"/htb/{box_name}/www/")
 
 run_zsh_command(f"gen_lin_rev {tun0_ip} 8443")
 run_zsh_command(f"gen_php_rev {tun0_ip} 8443")
+
+os.chdir(f"/htb/{box_name}/")
 
 print("[i] Wait until you have a box IP, after entering we start pinging it to see if its up")
 box_ip = input("[?] Enter the IP: ")
