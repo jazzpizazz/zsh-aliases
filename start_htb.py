@@ -174,5 +174,9 @@ command2 = f"nmap_udp {box_ip}"
 command3 = f"sleep 2 && vhost {box_name}.htb"
 command4 = f"fuzz_dir http://{box_name}.htb"
 command5 = f"feroxbuster -u http://{box_name}.htb"
+# [Windows Machines]
+command6 = f"rustscan -a {box_ip} -- -sC -sV -o rustscan"
+command7 = f"enum4linux -v {box_ip}"
+command8 = f"nxc smb {box_ip} --generate-hosts-file hosts.txt && cat hosts.txt >> /etc/hosts"
 
 start_tmux_session_with_windows(box_name, command1, command2, command3, command4, command5)
