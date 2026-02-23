@@ -11,7 +11,12 @@ mkdir_cd() {
   mkdir $1 && cd $_
 }
 
+# Hosts a simple HTTP server on port 80
 alias www="list_ips && ls_pwd && sudo python3 -m http.server 80"
+
+# Hosts a PHP-HTTP server on port 80
+alias wwwphp="list_ips && ls_pwd && sudo php -S 0.0.0.0:80"
+
 alias tun0="ifconfig tun0 | grep 'inet ' | cut -d' ' -f10 | tr -d '\n' | xclip -sel clip"
 
 # seclist_path
