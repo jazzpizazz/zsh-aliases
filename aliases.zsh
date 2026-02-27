@@ -19,6 +19,9 @@ alias wwwphp="list_ips && ls_pwd && sudo php -S 0.0.0.0:80"
 
 alias tun0="ifconfig tun0 | grep 'inet ' | cut -d' ' -f10 | tr -d '\n' | xclip -sel clip"
 
+# Copy functionality to more easily copy text/output from terminal to being able to paste it elsewhere
+alias copyme='xclip -sel clip'
+
 # seclist_path
 get_seclists_dir() {
   local dir
