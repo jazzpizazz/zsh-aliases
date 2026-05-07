@@ -1,3 +1,35 @@
+
+<div align="right">
+  <details>
+    <summary >🌐 Language</summary>
+    <div>
+      <div align="center">
+        <a href="https://openaitx.github.io/view.html?user=jazzpizazz&project=zsh-aliases&lang=en">English</a>
+        | <a href="https://openaitx.github.io/view.html?user=jazzpizazz&project=zsh-aliases&lang=zh-CN">简体中文</a>
+        | <a href="https://openaitx.github.io/view.html?user=jazzpizazz&project=zsh-aliases&lang=zh-TW">繁體中文</a>
+        | <a href="https://openaitx.github.io/view.html?user=jazzpizazz&project=zsh-aliases&lang=ja">日本語</a>
+        | <a href="https://openaitx.github.io/view.html?user=jazzpizazz&project=zsh-aliases&lang=ko">한국어</a>
+        | <a href="https://openaitx.github.io/view.html?user=jazzpizazz&project=zsh-aliases&lang=hi">हिन्दी</a>
+        | <a href="https://openaitx.github.io/view.html?user=jazzpizazz&project=zsh-aliases&lang=th">ไทย</a>
+        | <a href="https://openaitx.github.io/view.html?user=jazzpizazz&project=zsh-aliases&lang=fr">Français</a>
+        | <a href="https://openaitx.github.io/view.html?user=jazzpizazz&project=zsh-aliases&lang=de">Deutsch</a>
+        | <a href="https://openaitx.github.io/view.html?user=jazzpizazz&project=zsh-aliases&lang=es">Español</a>
+        | <a href="https://openaitx.github.io/view.html?user=jazzpizazz&project=zsh-aliases&lang=it">Italiano</a>
+        | <a href="https://openaitx.github.io/view.html?user=jazzpizazz&project=zsh-aliases&lang=ru">Русский</a>
+        | <a href="https://openaitx.github.io/view.html?user=jazzpizazz&project=zsh-aliases&lang=pt">Português</a>
+        | <a href="https://openaitx.github.io/view.html?user=jazzpizazz&project=zsh-aliases&lang=nl">Nederlands</a>
+        | <a href="https://openaitx.github.io/view.html?user=jazzpizazz&project=zsh-aliases&lang=pl">Polski</a>
+        | <a href="https://openaitx.github.io/view.html?user=jazzpizazz&project=zsh-aliases&lang=ar">العربية</a>
+        | <a href="https://openaitx.github.io/view.html?user=jazzpizazz&project=zsh-aliases&lang=fa">فارسی</a>
+        | <a href="https://openaitx.github.io/view.html?user=jazzpizazz&project=zsh-aliases&lang=tr">Türkçe</a>
+        | <a href="https://openaitx.github.io/view.html?user=jazzpizazz&project=zsh-aliases&lang=vi">Tiếng Việt</a>
+        | <a href="https://openaitx.github.io/view.html?user=jazzpizazz&project=zsh-aliases&lang=id">Bahasa Indonesia</a>
+        | <a href="https://openaitx.github.io/view.html?user=jazzpizazz&project=zsh-aliases&lang=as">অসমীয়া</
+      </div>
+    </div>
+  </details>
+</div>
+
 # Stuff for CTFs, HTB, THM etc
 Contains aliases and scripts I often use. Just clone this repo **in your home folder** and run `echo "source ~/zsh-aliases/aliases.zsh" >> ~/.zshrc`. After restarting zsh you should be able to use all aliases and scripts. Only tested on Kali Linux, you might need to install additional dependencies on other distros. 
 > #### Disclaimer
